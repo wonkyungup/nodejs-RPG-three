@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>TEST Web Socket! = about.html </title>
+    <script>
+    var log = function(s) {
+      console.log(s);
+      if (document.readyState !== "complete") {
+           log.buffer.push(s);
+      } else {
+          document.getElementById("output").innerHTML += (s + "\n")
+      }
+    }
+    log.buffer = [];
+    url = "ws://127.0.0.1:55555";
+    w = new WebSocket(url);
+ 
+    w.onopen = function() {
+        log("about.html open");
+        w.send("thank you for accepting this Web Socket request");
+    }
+ 
+    w.onmessage = function(e) {
+        console.log(e.data);
+        log(e.data);
+    }
+ 
+    w.onclose = function(e) {
+        log("closed");
+    }
+    
+    function enterkey(){
+        if (window.event.keyCode == 13){
+            log(log.buffer.join("\n"));
+            let inputMessageValue = document.getElementById('inputMessage');
+            w.send(inputMessageValue.value);
+            inputMessageValue.value = "";
+        }
+    }
+    </script>
+  </head>
+  <body>
+    <input onkeydown="enterkey();" type="text" id="inputMessage" value="" />
+    <pre id="output"></pre>
+  </body>
+</html>
