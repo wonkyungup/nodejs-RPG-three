@@ -26,8 +26,6 @@ module.exports = () =>{
     });
   });
   const list_save = (data) =>{
-    let buffer = [data];
-    console.log(buffer);
 
     let formatedTimestamp = ()=> {
         const d = new Date()
